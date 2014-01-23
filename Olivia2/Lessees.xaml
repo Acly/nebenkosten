@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="Acly.Olivia2.Lessees"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrls="clr-namespace:Acly.Controls;assembly=Acly.Controls"
+             xmlns:local="clr-namespace:Acly.Olivia2"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    
+    <UserControl.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </UserControl.Resources>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Delete" Executed="OnRemoveItem"/>
+        <CommandBinding Command="New" Executed="OnNewItem"/>
+    </UserControl.CommandBindings>
+    
+    <Grid Style="{StaticResource ContentWindow}">
+        <Grid.Resources>
+            <local:TitleConverter x:Key="TitleConverter"/>
+            
+            <ControlTemplate x:Key="DataEntryTemplate" TargetType="{x:Type ListViewItem}">
+                <Border Style="{StaticResource SelectedItemBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Style="{StaticResource ItemHeaderBorder}" Grid.Row="0" Grid.ColumnSpan="4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource ItemHeaderText}" Text="{Binding Name}"/>
+                                <Button Command="Delete" Grid.Column="1" IsTabStop="False" Style="{StaticResource RemoveItemButton}"/>
+                            </Grid>
+                        </Border>
+
+                        <!--Label Grid.Row="1" Grid.Column="0">Anrede</Label>
+                        <ComboBox Name="title" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="100"
+                                  SelectedIndex="{Binding Path=Title, Mode=TwoWay, Converter={StaticResource TitleConverter}}"
+                                  ItemsSource="{Binding Source={StaticResource TitleConverter}}"/-->
+
+                        <!--Label Grid.Row="2" Grid.Column="0">Vorname</Label>
+                        <TextBox Name="firstname" Grid.Row="2" Grid.Column="1"
+                            Text="{Binding Path=FirstName, ValidatesOnDataErrors=True}"/-->
+
+                        <!--Label Grid.Row="3" Grid.Column="0">Nachname</Label>
+                        <TextBox Name="lastname" Grid.Row="3" Grid.Column="1"
+                            Text="{Binding Path=LastName, ValidatesOnDataErrors=True}"/-->
+                        
+                        <Label Grid.Row="1" Grid.Column="0">Name</Label>
+                        <TextBox Name="name" Grid.Row="1" Grid.Column="1" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+                            Text="{Binding Path=Name, ValidatesOnDataErrors=True}"/>
+
+                        <Label Grid.Row="1" Grid.Column="2">Mieter</Label>
+                        <ctrls:NumberBox Name="members" Grid.Row="1" Grid.Column="3"
+                                Text="{Binding Path=Members, ValidatesOnDataErrors=True}"/>
+
+                        <CheckBox Name="useAddress" Grid.Row="2" Grid.Column="0" Content="Anrede und Adresse" IsTabStop="False"/>
+                        <TextBox Name="address" Height="60" Grid.Row="2" Grid.Column="1"
+                            AcceptsReturn="True" MaxLines="6" VerticalScrollBarVisibility="Auto" 
+                            IsEnabled="{Binding ElementName=useAddress, Path=IsChecked}"
+                            Text="{Binding Path=Address, ValidatesOnDataErrors=True}"/>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource HeaderBorder}" Grid.Row="0">
+            <Label Style="{StaticResource HeaderText}">Mietparteien</Label>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Border Style="{StaticResource DataGridBorder}">
+                <StackPanel>
+                    <ListView Name="lesseeList" Style="{StaticResource DataGrid}" SelectionMode="Single"
+                                ItemsSource="{Binding Source={StaticResource LesseeData}}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Template" Value="{StaticResource DefaultDataTemplate}"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Template" Value="{StaticResource DataEntryTemplate}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Path=Name}" />
+                                <GridViewColumn Header="Mieter" Width="60" DisplayMemberBinding="{Binding Path=Members}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Name="add" Command="New" Style="{StaticResource AddItemButton}">Mietpartei hinzufügen</Button>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

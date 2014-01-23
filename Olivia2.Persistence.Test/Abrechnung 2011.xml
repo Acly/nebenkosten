@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project id="0392818a-61c0-42da-b4be-62d8ed490ab5">
+<Name>Abrechnung 2011</Name>
+<Property>653bcfab-84e9-41b4-bc55-557f0e04ec67</Property>
+<StartDate>01/01/2011 00:00:00</StartDate>
+<Assignments>
+<FlatAssignmentCollection id="a54d97b7-7d11-4160-9001-983d9befbd01">
+<Flat>a5a505f1-255a-44b8-a1a4-3710a945171d</Flat>
+<FlatAssignment id="76f9eca2-7af9-4513-9797-7a11e52b21f6">
+<Lessee>cca17461-cb64-414d-9b72-1b1721b70769</Lessee>
+<Start>06/08/2011 16:49:13</Start>
+<End>06/11/2011 16:49:13</End>
+</FlatAssignment>
+</FlatAssignmentCollection>
+<FlatAssignmentCollection id="14dd305f-cf36-4ef1-9db4-825b1bedb21c">
+<Flat>48955d42-c185-4011-8ac1-107e98b56a32</Flat>
+</FlatAssignmentCollection>
+</Assignments>
+<Costs>
+<Cost id="c8f5595d-7c69-4d90-8f3f-cc9148f9f54e">
+<Name>Neue Ausgabe</Name>
+<Mode>Lessee</Mode>
+<Amount>0</Amount>
+<Options>
+<CostOptions id="cdd2b542-ae0b-43cf-bed3-f195f2691a10">
+<Lessee>cca17461-cb64-414d-9b72-1b1721b70769</Lessee>
+<Amount>0</Amount>
+<Affected>True</Affected>
+<Exempt>False</Exempt>
+</CostOptions>
+</Options>
+</Cost>
+</Costs>
+</Project>

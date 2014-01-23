@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="Acly.Olivia2.AdvancePayments"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Acly.Olivia2"
+             xmlns:ctrls="clr-namespace:Acly.Controls;assembly=Acly.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    
+    <UserControl.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </UserControl.Resources>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="New" Executed="OnNewPayment"/>
+    </UserControl.CommandBindings>
+
+    <Grid Style="{StaticResource ContentWindow}">
+        <Grid.Resources>
+
+            <local:PaymentDateConverter x:Key="PaymentDateConverter"/>
+            <local:IsStartDateConverter x:Key="IsStartDateConverter"/>
+
+            <ControlTemplate x:Key="PaymentEntryTemplate" TargetType="{x:Type ListViewItem}">
+                <Border Style="{StaticResource SelectedItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker Name="date" Grid.Column="0" SelectedDate="{Binding Start}"
+                                    Visibility="{Binding Path=Start,Converter={StaticResource IsStartDateConverter}}" />
+                        <ctrls:NumberBox Name="amount" Grid.Column="1" Text="{Binding Amount}"/>
+                    </Grid>
+                </Border>                        
+            </ControlTemplate>
+            
+            <ControlTemplate x:Key="DataEntryTemplate" TargetType="{x:Type ListViewItem}">
+                <Border Style="{StaticResource SelectedItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Style="{StaticResource ItemHeaderBorder}" Grid.Row="0">
+                            <TextBlock Style="{StaticResource ItemHeaderText}" Grid.Column="0" Text="{Binding Name}"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <Border Style="{StaticResource PaymentGridBorder}">
+                                <StackPanel>
+                                    <ListView Style="{StaticResource DataGrid}" SelectionMode="Single"
+                                        ItemsSource="{Binding Payments}">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}">
+                                                <Setter Property="Template" Value="{StaticResource DefaultDataTemplate}"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Template" Value="{StaticResource PaymentEntryTemplate}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style>
+                                                        <Setter Property="FrameworkElement.Visibility" Value="Collapsed"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=Start, Converter={StaticResource PaymentDateConverter}}"/>
+                                                <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Amount, StringFormat={}{0:F2}}"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <Button Command="New" Style="{StaticResource AddItemButton}">Vorrauszahlung ändern</Button>
+                                </StackPanel>
+                            </Border>
+                        </ScrollViewer>
+
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource HeaderBorder}" Grid.Row="0">
+            <Label Style="{StaticResource HeaderText}">Nebenkosten Vorrauszahlungen</Label>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Border Style="{StaticResource DataGridBorder}">
+                <ListView Name="lesseeList" Style="{StaticResource DataGrid}" SelectionMode="Single"
+                            ItemsSource="{Binding Source={StaticResource LesseeData}}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Template" Value="{StaticResource DefaultDataTemplate}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Template" Value="{StaticResource DataEntryTemplate}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Path=Name}"/>
+                            <GridViewColumn Header="Letzte Änderung" Width="200" DisplayMemberBinding="{Binding Path=Payments.LastChange, Converter={StaticResource PaymentDateConverter}}"/>
+                            <GridViewColumn Header="Vorrauszahlung (€)" Width="120" DisplayMemberBinding="{Binding Path=Payments.Current, StringFormat={}{0:F2}}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView> 
+            </Border>            
+        </ScrollViewer>        
+        
+    </Grid>
+</UserControl>

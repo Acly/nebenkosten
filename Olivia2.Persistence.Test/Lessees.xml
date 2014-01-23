@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Lessees>
+<Lessee id="cca17461-cb64-414d-9b72-1b1721b70769">
+<Name>Gana</Name>
+<Members>2</Members>
+<Title>Frau</Title>
+<FirstName>Nesa</FirstName>
+<LastName>Verde</LastName>
+<Address></Address>
+<Payments>
+<AdvancePayment id="80828e21-cb55-490d-a6a8-fd3d5ddc7f43">
+<Start>01/01/0001 00:00:00</Start>
+<Amount>30.6</Amount>
+</AdvancePayment>
+<AdvancePayment id="6133dbd3-1225-489f-b35e-b1abcf98cae9">
+<Start>06/08/2011 16:49:13</Start>
+<Amount>40.2</Amount>
+</AdvancePayment>
+</Payments>
+</Lessee>
+</Lessees>

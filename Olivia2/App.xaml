@@ -1,0 +1,22 @@
+﻿<Application x:Class="Acly.Olivia2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:data="clr-namespace:Acly.Olivia2.Model;assembly=Olivia2.Model"
+             xmlns:local="clr-namespace:Acly.Olivia2"
+             xmlns:persist="clr-namespace:Acly.Olivia2.Persistence;assembly=Olivia2.Persistence"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <data:ProjectManager x:Key="ProjectData"/>
+        <data:PropertyManager x:Key="PropertyData"/>
+        <data:LesseeManager x:Key="LesseeData"/>
+        
+        <persist:Serializer x:Key="Serializer"/>
+        <persist:ProjectInfoCollection x:Key="ProjectInfo"/>
+        
+        <local:Settings x:Key="Settings"/>
+        <local:InvertBooleanConverter x:Key="InvertBoolean"/>
+        <local:MinusOneConverter x:Key="MinusOne"/>
+        <local:IsNullConverter x:Key="IsNull"/>
+        <local:IsNotNullConverter x:Key="IsNotNull"/>
+    </Application.Resources>
+</Application>

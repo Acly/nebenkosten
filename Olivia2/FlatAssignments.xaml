@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Acly.Olivia2.FlatAssignments"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrls="clr-namespace:Acly.Controls;assembly=Acly.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600" Name="flatAssignmentsWindow">
+    
+    <UserControl.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </UserControl.Resources>
+    
+    <Grid Style="{StaticResource ContentWindow}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        
+        <GroupBox Name="assignment" Style="{StaticResource ControlBox}" Grid.Row="0" Header="Mietzeitraum">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">Fläche</Label>
+                <ComboBox Name="flat" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" 
+                          ItemsSource="{Binding Source={StaticResource ProjectData}, Path=Current.Property.Flats}"
+                          SelectedItem="{Binding ElementName=flatAssignmentsWindow, Path=Flat, ValidatesOnExceptions=True}"
+                          IsEnabled="{Binding Path=HostingCollection, Converter={StaticResource IsNull}}"/>
+                <Label Grid.Row="1" Grid.Column="0">Mietpartei</Label>
+                <ComboBox Name="lessee" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="1"
+                          ItemsSource="{Binding Source={StaticResource LesseeData}}"
+                          SelectedItem="{Binding Path=Lessee, ValidatesOnDataErrors=True}"/>
+                <RadioButton Name="defaultTimespan" Grid.Row="2" Grid.Column="0" Content="Abrechnungszeitraum"
+                             IsChecked="{Binding Path=IsDefault, Mode=OneWay}"/>
+                <RadioButton Name="customTimespan" Grid.Column="2" Grid.Row="2" Content="Zeitraum"
+                             IsChecked="{Binding Path=IsDefault, Mode=OneWay, Converter={StaticResource InvertBoolean}}"/>
+                <Label Grid.Column="3" Grid.Row="2" IsEnabled="{Binding ElementName=customTimespan, Path=IsChecked}">Von:</Label>
+                <Label Grid.Column="3" Grid.Row="3" IsEnabled="{Binding ElementName=customTimespan, Path=IsChecked}">Bis:</Label>
+                <ComboBox Grid.Column="4" Grid.Row="2" 
+                          IsEnabled="{Binding ElementName=customTimespan, Path=IsChecked}"
+                          ItemsSource="{Binding Source={StaticResource ProjectData}, Path=Current.IntervalStartDates}"
+                          SelectedIndex="{Binding Path=StartIntervalIndex, Mode=TwoWay}"/>
+                <ComboBox Grid.Column="4" Grid.Row="3" 
+                          IsEnabled="{Binding ElementName=customTimespan, Path=IsChecked}"
+                          ItemsSource="{Binding Source={StaticResource ProjectData}, Path=Current.IntervalEndDates}"
+                          SelectedIndex="{Binding Path=EndIntervalIndex, Mode=TwoWay}"/>
+
+                <Border Style="{StaticResource ControlBottom}" Grid.Row="4" Grid.ColumnSpan="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="newAssignment" Style="{StaticResource ControlButton}" Grid.Column="0" 
+                                Content="Neuer Mietzeitraum"  IsTabStop="False"
+                                IsEnabled="{Binding Path=HostingCollection, Converter={StaticResource IsNotNull}}" />
+                        <Button Name="delete" Style="{StaticResource ControlButton}" Grid.Column="1" 
+                                Content="Löschen" IsTabStop="False"
+                                IsEnabled="{Binding Path=HostingCollection, Converter={StaticResource IsNotNull}}" />
+                        <Button Name="apply" Style="{StaticResource ControlButton}" Grid.Column="2" 
+                                Content="Übernehmen" HorizontalAlignment="Right"
+                                IsEnabled="{Binding Path=HostingCollection, Converter={StaticResource IsNull}}"/>
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </GroupBox>
+        
+        <Border Style="{StaticResource DataGridBorder}" Grid.Row="1">
+            <ctrls:Timeline Name="assignments" StartDate="{Binding Source={StaticResource ProjectData}, Path=Current.StartDate}"
+                            EndDate="{Binding Source={StaticResource ProjectData}, Path=Current.EndDate}"
+                            ItemsSource="{Binding Source={StaticResource ProjectData}, Path=Current.Assignments}">
+                <ctrls:Timeline.ItemTemplate>
+                    <DataTemplate>
+                        <ctrls:TimelineRow Header="{Binding Path=Flat.Name}" ItemsSource="{Binding}">
+                            <ctrls:TimelineRow.ItemTemplate>
+                                <DataTemplate>
+                                    <ctrls:Timespan StartDate="{Binding Start}" EndDate="{Binding End}"
+                                                    Header="{Binding Path=Lessee.Name}"/>
+                                </DataTemplate>
+                            </ctrls:TimelineRow.ItemTemplate>
+                        </ctrls:TimelineRow>
+                    </DataTemplate>
+                </ctrls:Timeline.ItemTemplate>
+            </ctrls:Timeline>
+        </Border>
+    </Grid>
+</UserControl>

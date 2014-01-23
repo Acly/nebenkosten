@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+	<ProjectPath>Data/</ProjectPath>
+	<PropertyFilepath>Data/Properties.xml</PropertyFilepath>
+	<LesseeFilepath>Data/Lessees.xml</LesseeFilepath>
+	<AutoSave>True</AutoSave>
+</Settings>

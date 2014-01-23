@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Properties>
+<Property id="37c38af5-64f2-436c-b166-77be4f059c19">
+<Name>Haus1</Name>
+<Address>iowajdoij
+iowadjioj</Address>
+<Flats>
+<Flat id="a5a505f1-255a-44b8-a1a4-3710a945171d">
+<Name>Wohnung A</Name>
+<Size>80</Size>
+</Flat>
+<Flat id="48955d42-c185-4011-8ac1-107e98b56a32">
+<Name>Wohnung C</Name>
+<Size>45</Size>
+</Flat>
+</Flats>
+</Property>
+<Property id="5c1dc2e8-0382-4040-a037-2609195ad8c0">
+<Name>Wahrsagerhaus</Name>
+<Address>Zuckerblitzstraße 22
+9883 Persetia</Address>
+<Flats>
+<Flat id="d9eadb2a-4eed-45db-8701-3ca192271455">
+<Name>Wohnung A</Name>
+<Size>80</Size>
+</Flat>
+<Flat id="45d1ea31-18b4-4f0a-b427-832c0e6ecacc">
+<Name>Wohnung C</Name>
+<Size>45</Size>
+</Flat>
+</Flats>
+</Property>
+<Property id="b3b38d02-53f1-416e-a831-1985b31c404d">
+<Name>Orakel</Name>
+<Address>Waora No 1
+0002 Kerklitz
+Malu</Address>
+<Flats>
+<Flat id="94bf1677-45fd-4dc5-b039-1104ff45b58a">
+<Name>Wohnung A</Name>
+<Size>80</Size>
+</Flat>
+<Flat id="6df04d39-7a6a-4886-b9cd-04b3c805ad6e">
+<Name>Wohnung C</Name>
+<Size>45</Size>
+</Flat>
+</Flats>
+</Property>
+<Property id="7121f867-057f-462c-a3c1-a55848da5273">
+<Name>Kornmühle</Name>
+<Address>Waora No 2
+0002 Kerklitz
+Malu</Address>
+<Flats>
+<Flat id="e1360b4e-86c7-4a25-ab72-8d4733c8073a">
+<Name>Wohnung A</Name>
+<Size>80</Size>
+</Flat>
+<Flat id="292ad9d9-88bd-433b-91c6-a86f1eaf5c68">
+<Name>Wohnung C</Name>
+<Size>45</Size>
+</Flat>
+</Flats>
+</Property>
+</Properties>
